@@ -38,13 +38,16 @@
                 host = forwarded;
               }
             }
-            _this.env.log(host + " " + req.method + " " + req.originalUrl + " [" + req.headers['user-agent'] + "]", {
+            req.logContext = {
+              tags: ['ip-' + host]
+            };
+            _this.env.log(req.originalUrl + " [" + req.headers['user-agent'] + "]", {
               url: req.originalUrl,
               level: 2,
               ip: host,
               headers: req.headers,
               method: req.method
-            }, 'http', req.method, host);
+            }, 'http', req.method, "ip-" + host);
             return next();
           };
         })(this));
