@@ -5,6 +5,7 @@ ejslocals = require 'ejs-locals'
 h = require 'helpers'
 _ = require 'underscore'
 util = require 'util'
+colors = require 'colors'
 
 exports.lego = backbone.Model.extend4000
     requires: [ 'logger' ]
@@ -24,7 +25,7 @@ exports.lego = backbone.Model.extend4000
                 host = req.socket.remoteAddress
                 if host is "127.0.0.1" then if forwarded = req.headers['x-forwarded-for'] then host = forwarded
                 req.logContext = { tags: [ 'ip-' + host ] }
-                @env.log req.originalUrl + " [" + req.headers['user-agent'] + "]", { url: req.originalUrl, level: 2, ip: host, headers: req.headers, method: req.method }, 'http', req.method, "ip-" + host
+                @env.log req.originalUrl + " [" + req.headers['user-agent'] + "]", { url: req.originalUrl, ip: host, headers: req.headers, method: req.method }, 'http', req.method, "ip-" + host
 
                 next()
 
@@ -43,6 +44,6 @@ exports.lego = backbone.Model.extend4000
 
         @env.http = http.createServer @env.app
         @env.http.listen @settings.port
-        @env.log 'express listening at ' + @settings.port, {}, 'init','ok'
+        @env.log 'express listening at ' + colors.green(@settings.port), {}, 'init','ok'
 
         callback()
