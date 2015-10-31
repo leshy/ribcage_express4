@@ -7,7 +7,7 @@ _ = require 'underscore'
 util = require 'util'
 colors = require 'colors'
 
-exports.lego = backbone.Model.extend4000
+exports.lego = backbone.Model.extend4000 do
     requires: [ 'logger' ]
     after: [ 'db' ]
     init: (callback) ->
@@ -19,9 +19,8 @@ exports.lego = backbone.Model.extend4000
             log: true
         }, @settings
 
-
         if @settings.log
-            app.use (req, res, next) =>
+            app.use (req, res, next) ~>
                 host = req.socket.remoteAddress
                 if host is "127.0.0.1" then if forwarded = req.headers['x-forwarded-for'] then host = forwarded
                 req.logContext = { tags: [ 'ip-' + host ] }
@@ -33,9 +32,9 @@ exports.lego = backbone.Model.extend4000
         else
             app.engine 'ejs', ejslocals
             app.set 'view engine', 'ejs'
-            app.set 'views', env.settings.module.express4.views
+            app.set 'views', @env?settings?module?express4?views or (__dirname + '/ejs')
             app.set 'x-powered-by', false
-            app.use express.static env.settings.module.express4.static,
+            app.use express.static (@env?settings?module?express4?static or (__dirname + '/static')), do
                 index: false
                 redirect: false
                 etag: false
