@@ -1,3 +1,4 @@
+#autocompile
 backbone = require 'backbone4000'
 http = require 'http'
 express = require 'express'
@@ -32,9 +33,9 @@ exports.lego = backbone.Model.extend4000 do
         else
             app.engine 'ejs', ejslocals
             app.set 'view engine', 'ejs'
-            app.set 'views', @env?settings?module?express4?views or (__dirname + '/ejs')
+            app.set 'views', @settings.views
             app.set 'x-powered-by', false
-            app.use express.static (@env?settings?module?express4?static or (__dirname + '/static')), do
+            app.use express.static @settings.static, do
                 index: false
                 redirect: false
                 etag: false
