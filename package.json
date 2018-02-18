@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/leshy/ribcage_express4/issues"
   },
-  "homepage": "https://github.com/leshy/ribcage_express4"
+  "homepage": "https://github.com/leshy/ribcage_express4",
+  "dependencies": {
+    "ejs-locals": "^1.0.2",
+    "express4": "^0.0.1",
+    "backbone4000": "git+ssh://git@github.com/leshy/backbone4000.git",
+    "helpers": "git+ssh://git@github.com/leshy/nodejs-helpers.git",
+    "colors": "^1.1.2"
+  }
 }
